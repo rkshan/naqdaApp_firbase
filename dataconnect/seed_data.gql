@@ -1,0 +1,31 @@
+mutation SeedData @transaction {
+  farm_insertMany(data: [
+    { id: "e6f8b1a0-1234-4567-89ab-000000000001", name: "AquaFarm North", location: "Coastal Region", contactEmail: "info@aquafarm-north.com" },
+    { id: "e6f8b1a0-1234-4567-89ab-000000000002", name: "AquaFarm South", location: "Inland Valley", contactEmail: "contact@aquafarm-south.com" }
+  ])
+  pond_insertMany(data: [
+    { id: "f47ac10b-58cc-4372-a567-000000000001", pondName: "Main Tank 1", volumeCapacity: 5000.5, speciesType: "Tilapia", currentStatus: "Active", farm: { id: "e6f8b1a0-1234-4567-89ab-000000000001" } },
+    { id: "f47ac10b-58cc-4372-a567-000000000002", pondName: "Breeding Pool", volumeCapacity: 2000.0, speciesType: "Catfish", currentStatus: "Maintenance", farm: { id: "e6f8b1a0-1234-4567-89ab-000000000002" } },
+    { id: "f47ac10b-58cc-4372-a567-000000000003", pondName: "Nursing Tank", volumeCapacity: 1500.0, speciesType: "Tilapia", currentStatus: "Active", farm: { id: "e6f8b1a0-1234-4567-89ab-000000000001" } }
+  ])
+  inventory_insertMany(data: [
+    { itemName: "Fish Feed Pellets", quantityRemaining: 500.0, unit: "kg", farm: { id: "e6f8b1a0-1234-4567-89ab-000000000001" } },
+    { itemName: "PH Balancing Solution", quantityRemaining: 20.0, unit: "liters", farm: { id: "e6f8b1a0-1234-4567-89ab-000000000001" } },
+    { itemName: "Oxygen Tabs", quantityRemaining: 100.0, unit: "count", farm: { id: "e6f8b1a0-1234-4567-89ab-000000000002" } }
+  ])
+  waterQualityLog_insertMany(data: [
+    { timestamp: "2023-10-01T08:00:00Z", phLevel: 7.2, dissolvedOxygen: 6.5, temperature: 24.5, pond: { id: "f47ac10b-58cc-4372-a567-000000000001" } },
+    { timestamp: "2023-10-01T12:00:00Z", phLevel: 7.4, dissolvedOxygen: 6.2, temperature: 25.0, pond: { id: "f47ac10b-58cc-4372-a567-000000000001" } },
+    { timestamp: "2023-10-01T09:00:00Z", phLevel: 6.9, dissolvedOxygen: 7.0, temperature: 22.0, pond: { id: "f47ac10b-58cc-4372-a567-000000000002" } }
+  ])
+  feedingRecord_insertMany(data: [
+    { feedType: "Growth Formula", quantityInKg: 25.5, timestamp: "2023-10-01T07:30:00Z", pond: { id: "f47ac10b-58cc-4372-a567-000000000001" } },
+    { feedType: "Starter Crumble", quantityInKg: 10.0, timestamp: "2023-10-01T07:45:00Z", pond: { id: "f47ac10b-58cc-4372-a567-000000000003" } },
+    { feedType: "Maintenance Feed", quantityInKg: 15.0, timestamp: "2023-10-01T08:15:00Z", pond: { id: "f47ac10b-58cc-4372-a567-000000000002" } }
+  ])
+  harvest_insertMany(data: [
+    { harvestDate: "2023-09-15", totalWeightKg: 120.0, totalRevenue: 600.0, notes: "Excellent batch", pond: { id: "f47ac10b-58cc-4372-a567-000000000001" } },
+    { harvestDate: "2023-09-20", totalWeightKg: 85.0, totalRevenue: 425.0, notes: "Standard harvest", pond: { id: "f47ac10b-58cc-4372-a567-000000000003" } },
+    { harvestDate: "2023-09-25", totalWeightKg: 200.0, totalRevenue: 1000.0, notes: "Large scale harvest", pond: { id: "f47ac10b-58cc-4372-a567-000000000001" } }
+  ])
+}

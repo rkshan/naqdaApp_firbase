@@ -1,0 +1,43 @@
+type Farm @table {
+  name: String!
+  location: String!
+  contactEmail: String
+}
+
+type Pond @table {
+  pondName: String!
+  volumeCapacity: Float!
+  speciesType: String
+  currentStatus: String
+  farm: Farm!
+}
+
+type WaterQualityLog @table {
+  timestamp: Timestamp!
+  phLevel: Float!
+  dissolvedOxygen: Float!
+  temperature: Float!
+  pond: Pond!
+}
+
+type FeedingRecord @table {
+  feedType: String!
+  quantityInKg: Float!
+  timestamp: Timestamp!
+  pond: Pond!
+}
+
+type Harvest @table {
+  harvestDate: Date!
+  totalWeightKg: Float!
+  totalRevenue: Float!
+  notes: String
+  pond: Pond!
+}
+
+type Inventory @table {
+  itemName: String!
+  quantityRemaining: Float!
+  unit: String!
+  farm: Farm!
+}

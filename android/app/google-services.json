@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "8362647981",
+    "project_id": "naqdaapp",
+    "storage_bucket": "naqdaapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8362647981:android:b96b4336fcdce018400124",
+        "android_client_info": {
+          "package_name": "com.example.naqda"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJZeM5QLepzOlpEzySraa2gi2B9YMhEEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
