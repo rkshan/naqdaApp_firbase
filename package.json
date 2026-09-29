@@ -1,0 +1,24 @@
+{
+  "name": "naqdaapp_firbase",
+  "version": "1.0.0",
+  "description": "A new Flutter project.",
+  "homepage": "https://github.com/rkshan/naqdaApp_firbase#readme",
+  "bugs": {
+    "url": "https://github.com/rkshan/naqdaApp_firbase/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rkshan/naqdaApp_firbase.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
