@@ -1,33 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:naqda/firebase_options.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'NAQDA',
-      theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFdfeef3),
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0a90b6)),
-        useMaterial3: true,
-      ),
-      home: const LandingPage(),
-    );
-  }
-}
-
-class LandingPage extends StatelessWidget {
-  const LandingPage({super.key});
+class GetStartedPage extends StatelessWidget {
+  const GetStartedPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +89,7 @@ class LandingPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(16),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFF49b7d6).withOpacity(0.35),
+                                  color: const Color(0xFF49b7d6).withValues(alpha: 0.35),
                                   blurRadius: 12,
                                   offset: const Offset(0, 8),
                                 ),
@@ -272,52 +246,32 @@ class LandingPage extends StatelessWidget {
             width: 320,
             height: 200,
             decoration: BoxDecoration(
-              color: const Color(0xFFc1dfe7).withOpacity(0.7),
+              color: const Color(0xFFc1dfe7).withValues(alpha: 0.7),
               borderRadius: BorderRadius.circular(180),
             ),
           ),
           Container(
             width: 220,
             height: 170,
-            padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: const Color(0xFFF5F8F9),
               border: Border.all(color: const Color(0xFF0c7ea5), width: 2.2),
               borderRadius: BorderRadius.circular(18),
             ),
-            child: Stack(
-              children: [
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 150,
-                    height: 110,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF0e6988),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Transform.rotate(
-                    angle: -0.22,
-                    child: const Icon(Icons.shield_moon_rounded, size: 92, color: Color(0xFF1f2f43)),
-                  ),
-                ),
-                const Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    'NAQDA',
-                    style: TextStyle(
-                      fontSize: 28,
-                      letterSpacing: 2,
-                      fontWeight: FontWeight.w900,
-                      color: Color(0xFF0d3b51),
-                    ),
-                  ),
-                ),
-              ],
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                'images/logo.gif',
+                fit: BoxFit.contain,
+                width: double.infinity,
+                height: double.infinity,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Center(
+                    child: Icon(Icons.image_not_supported, size: 48, color: Color(0xFF0c7ea5)),
+                  );
+                },
+              ),
             ),
           ),
         ],
