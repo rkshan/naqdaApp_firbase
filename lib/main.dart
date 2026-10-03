@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:naqda/firebase_options.dart';
+import 'package:naqda/get_started_page.dart';
+import 'package:naqda/signup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0a90b6)),
         useMaterial3: true,
       ),
-      home: const LandingPage(),
+      home: const GetStartedPage(),
     );
   }
 }
@@ -97,43 +99,52 @@ class LandingPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 20),
-                          const Row(
-                            children: [
+                          Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: const [
                               _TagChip(label: 'Our waters.'),
-                              SizedBox(width: 10),
                               _TagChip(label: 'Our communities.'),
-                              SizedBox(width: 10),
                               _TagChip(label: 'Our future.'),
                             ],
                           ),
                           const SizedBox(height: 26),
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-                            decoration: BoxDecoration(
-                              color: const Color(0xFF49b7d6),
-                              borderRadius: BorderRadius.circular(16),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFF49b7d6).withOpacity(0.35),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 8),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const SignUpPage(),
                                 ),
-                              ],
-                            ),
-                            child: const Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Get Started',
-                                  style: TextStyle(
-                                    fontSize: 26,
-                                    fontWeight: FontWeight.w800,
-                                    color: Colors.white,
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+                              decoration: BoxDecoration(
+                                color: const Color(0xFF49b7d6),
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(0xFF49b7d6).withValues(alpha: 0.35),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 8),
                                   ),
-                                ),
-                                Icon(Icons.arrow_forward, color: Colors.white, size: 28),
-                              ],
+                                ],
+                              ),
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Get Started',
+                                    style: TextStyle(
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Icon(Icons.arrow_forward, color: Colors.white, size: 28),
+                                ],
+                              ),
                             ),
                           ),
                           const SizedBox(height: 30),
@@ -159,18 +170,25 @@ class LandingPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 18),
-                          const Center(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
+                          Center(
+                            child: Wrap(
+                              alignment: WrapAlignment.center,
+                              crossAxisAlignment: WrapCrossAlignment.center,
+                              spacing: 12,
+                              runSpacing: 8,
                               children: [
-                                Icon(Icons.waves, color: Color(0xFF0b3d4d), size: 18),
-                                SizedBox(width: 12),
-                                Text(
-                                  'Small beginnings. Lasting possibilities.',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Color(0xFF3d5d68),
-                                    fontWeight: FontWeight.w600,
+                                const Icon(Icons.waves, color: Color(0xFF0b3d4d), size: 18),
+                                SizedBox(
+                                  width: 220,
+                                  child: const Text(
+                                    'Small beginnings. Lasting possibilities.',
+                                    textAlign: TextAlign.center,
+                                    softWrap: true,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Color(0xFF3d5d68),
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -185,15 +203,17 @@ class LandingPage extends StatelessWidget {
                 const Divider(height: 1, color: Color(0xFFbfdbe3)),
                 Container(
                   padding: const EdgeInsets.fromLTRB(22, 18, 22, 14),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Wrap(
+                    alignment: WrapAlignment.spaceBetween,
+                    runSpacing: 8,
                     children: [
-                      Text(
+                      const Text(
                         '© 2026 NAQDA. A fresher everyday.',
                         style: TextStyle(fontSize: 13, color: Color(0xFF476d7b)),
                       ),
                       Row(
-                        children: [
+                        mainAxisSize: MainAxisSize.min,
+                        children: const [
                           Text('Privacy', style: TextStyle(fontSize: 13, color: Color(0xFF476d7b))),
                           SizedBox(width: 22),
                           Text('Terms', style: TextStyle(fontSize: 13, color: Color(0xFF476d7b))),
@@ -272,7 +292,7 @@ class LandingPage extends StatelessWidget {
             width: 320,
             height: 200,
             decoration: BoxDecoration(
-              color: const Color(0xFFc1dfe7).withOpacity(0.7),
+              color: const Color(0xFFc1dfe7).withValues(alpha: 0.7),
               borderRadius: BorderRadius.circular(180),
             ),
           ),
