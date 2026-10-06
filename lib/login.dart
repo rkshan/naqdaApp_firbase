@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:naqda/login.dart';
+import 'package:naqda/signup.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key, this.selectedRole});
-
-  final String? selectedRole;
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +16,7 @@ class SignUpPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF006699)),
         ),
         title: const Text(
-          'Create Account',
+          'Log in',
           style: TextStyle(
             color: Color(0xFF0B2545),
             fontWeight: FontWeight.w700,
@@ -35,7 +33,6 @@ class SignUpPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  // Brand logo shown above the signup form.
                   Center(
                     child: SizedBox(
                       width: 120,
@@ -46,10 +43,10 @@ class SignUpPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 22),
                   const Center(
                     child: Text(
-                      'Join NAQDA',
+                      'Welcome back',
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.w800,
@@ -60,7 +57,7 @@ class SignUpPage extends StatelessWidget {
                   const SizedBox(height: 8),
                   const Center(
                     child: Text(
-                      'Create your account to start your aquaculture journey.',
+                      'Sign in to continue your NAQDA journey.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xFF5C6B73),
@@ -69,78 +66,41 @@ class SignUpPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  if (selectedRole != null) ...[
-                    const SizedBox(height: 14),
-                    Center(
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE3F3FA),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Text(
-                          'Role: $selectedRole',
-                          style: const TextStyle(
-                            color: Color(0xFF006699),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
                   const SizedBox(height: 24),
-
-                  // Form fields.
-                  _buildTextField(
-                    label: 'Full name',
-                    icon: Icons.person_outline,
-                  ),
+                  _buildTextField(label: 'Email address', icon: Icons.email_outlined, keyboardType: TextInputType.emailAddress),
                   const SizedBox(height: 14),
-                  _buildTextField(
-                    label: 'Email address',
-                    icon: Icons.email_outlined,
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 14),
-                  _buildTextField(
-                    label: 'Password',
-                    icon: Icons.lock_outline,
-                    isPassword: true,
-                  ),
-                  const SizedBox(height: 14),
-                  _buildTextField(
-                    label: 'Confirm password',
-                    icon: Icons.lock_reset_outlined,
-                    isPassword: true,
-                  ),
-                  const SizedBox(height: 18),
-
-                  // Simple checkbox row.
+                  _buildTextField(label: 'Password', icon: Icons.lock_outline, isPassword: true),
+                  const SizedBox(height: 12),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Checkbox(
-                        value: true,
-                        activeColor: const Color(0xFF006699),
-                        onChanged: (value) {},
-                      ),
-                      const Expanded(
-                        child: Text(
-                          'I agree to the terms and conditions',
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Color(0xFF5C6B73),
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: true,
+                            activeColor: const Color(0xFF006699),
+                            onChanged: (value) {},
                           ),
+                          const Text(
+                            'Remember me',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Color(0xFF5C6B73),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Text(
+                        'Forgot password?',
+                        style: TextStyle(
+                          color: Color(0xFF006699),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 18),
-
-                  // CTA button.
                   SizedBox(
                     height: 54,
                     child: ElevatedButton(
@@ -154,7 +114,7 @@ class SignUpPage extends StatelessWidget {
                         ),
                       ),
                       child: const Text(
-                        'Sign Up',
+                        'Log in',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w800,
@@ -163,13 +123,11 @@ class SignUpPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 22),
-
-                  // Footer login shortcut.
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Already have an account? ',
+                        'Don\'t have an account? ',
                         style: TextStyle(
                           color: Color(0xFF5C6B73),
                           fontSize: 12,
@@ -179,12 +137,12 @@ class SignUpPage extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => const LoginPage(),
+                              builder: (context) => const SignUpPage(),
                             ),
                           );
                         },
                         child: const Text(
-                          'Log in',
+                          'Sign up',
                           style: TextStyle(
                             color: Color(0xFF006699),
                             fontWeight: FontWeight.w800,
@@ -216,12 +174,12 @@ class SignUpPage extends StatelessWidget {
         filled: true,
         fillColor: Colors.white,
         hintText: label,
-        hintStyle: const TextStyle(color: Color(0xFF7A8E9D), fontSize: 13),
-        prefixIcon: Icon(icon, color: const Color(0xFF006699), size: 20),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
+        hintStyle: const TextStyle(
+          color: Color(0xFF7A8E9D),
+          fontSize: 13,
         ),
+        prefixIcon: Icon(icon, color: const Color(0xFF006699), size: 20),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(14),
           borderSide: const BorderSide(color: Color(0xFFD5E8F8)),

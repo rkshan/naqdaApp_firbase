@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:naqda/firebase_options.dart';
 import 'package:naqda/get_started_page.dart';
+import 'package:naqda/login.dart';
 import 'package:naqda/signup.dart';
 
 void main() async {
@@ -148,24 +149,33 @@ class LandingPage extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 30),
-                          const Center(
-                            child: Text.rich(
-                              TextSpan(
-                                text: 'Already part of NAQDA? ',
-                                style: TextStyle(
-                                  color: Color(0xFF3d5d68),
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: 'Log in',
-                                    style: TextStyle(
-                                      color: Color(0xFF0b3d4d),
-                                      fontWeight: FontWeight.w700,
-                                    ),
+                          Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginPage(),
                                   ),
-                                ],
+                                );
+                              },
+                              child: const Text.rich(
+                                TextSpan(
+                                  text: 'Already part of NAQDA? ',
+                                  style: TextStyle(
+                                    color: Color(0xFF3d5d68),
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  children: [
+                                    TextSpan(
+                                      text: 'Log in',
+                                      style: TextStyle(
+                                        color: Color(0xFF0b3d4d),
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
