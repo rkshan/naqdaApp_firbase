@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:naqda/signup.dart';
+import 'package:naqda/login.dart';
+import 'package:naqda/role_selection.dart';
 
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({super.key});
@@ -47,12 +48,21 @@ class GetStartedPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Text(
-                        'Log in',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xFF0B6D93),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginPage(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Log in',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF0B6D93),
+                          ),
                         ),
                       ),
                     ],
@@ -123,7 +133,7 @@ class GetStartedPage extends StatelessWidget {
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => const SignUpPage(),
+                                  builder: (context) => const RoleSelectionPage(),
                                 ),
                               );
                             },
