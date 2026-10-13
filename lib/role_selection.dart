@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:naqda/home_page.dart';
 import 'package:naqda/signup.dart';
 
 class RoleSelectionPage extends StatefulWidget {
@@ -71,10 +72,7 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
                   const Text(
                     'Select the role that best describes you.',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF5D7381),
-                    ),
+                    style: TextStyle(fontSize: 14, color: Color(0xFF5D7381)),
                   ),
                   const SizedBox(height: 26),
                   for (final role in _roles) ...[
@@ -88,11 +86,20 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
                       onPressed: _selectedRole == null
                           ? null
                           : () {
+                              if (_selectedRole == 'Guest User') {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                    builder: (context) => const HomePage(),
+                                  ),
+                                  (route) => false,
+                                );
+                                return;
+                              }
+
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => SignUpPage(
-                                    selectedRole: _selectedRole,
-                                  ),
+                                  builder: (context) =>
+                                      SignUpPage(selectedRole: _selectedRole),
                                 ),
                               );
                             },
