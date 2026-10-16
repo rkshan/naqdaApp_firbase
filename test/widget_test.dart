@@ -6,22 +6,49 @@ import 'package:naqda/home_page.dart';
 import 'package:naqda/role_selection.dart';
 
 void main() {
-  testWidgets('home page shows fish breeding encyclopedia', (
+  testWidgets('home page shows fish encyclopedia species', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(const MaterialApp(home: HomePage()));
 
     expect(find.byKey(const ValueKey('home-brand-logo')), findsOneWidget);
-    await tester.drag(find.byType(CustomScrollView), const Offset(0, -700));
+    await tester.scrollUntilVisible(
+      find.text('Fish Encyclopedia'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
     await tester.pumpAndSettle();
     expect(find.text('Fish Encyclopedia'), findsOneWidget);
-    expect(find.text('Fishes for Breeding'), findsOneWidget);
+    expect(find.text('Fish Species'), findsOneWidget);
+    expect(find.text('11 species'), findsOneWidget);
 
-    for (final fishName in ['Nile tilapia', 'Common carp', 'Rohu', 'Catla']) {
-      await tester.ensureVisible(find.text(fishName));
+    const species = [
+      ('Nile Tilapia', 'Oreochromis niloticus'),
+      ('Mozambique Tilapia', 'Oreochromis mossambicus'),
+      ('Common Carp', 'Cyprinus carpio'),
+      ('Grass Carp', 'Ctenopharyngodon idella'),
+      ('Bighead Carp', 'Hypophthalmichthys nobilis'),
+      ('Catla', 'Labeo catla'),
+      ('Rohu', 'Labeo rohita'),
+      ('Mrigal', 'Cirrhinus mrigala'),
+      ('Green Chromide (Etroplus)', 'Etroplus suratensis'),
+      ('Striped Snakehead', 'Channa striata'),
+      ('Butter Catfish', 'Ompok bimaculatus'),
+    ];
+    const picturedFish = {'Nile Tilapia', 'Common Carp', 'Rohu', 'Catla'};
+
+    for (final (fishName, scientificName) in species) {
+      await tester.scrollUntilVisible(
+        find.text(fishName),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
       await tester.pumpAndSettle();
       expect(find.text(fishName), findsOneWidget);
-      expect(find.byKey(ValueKey('fish-photo-$fishName')), findsOneWidget);
+      expect(find.text(scientificName), findsOneWidget);
+      if (picturedFish.contains(fishName)) {
+        expect(find.byKey(ValueKey('fish-photo-$fishName')), findsOneWidget);
+      }
     }
   });
 
