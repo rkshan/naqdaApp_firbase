@@ -34,6 +34,7 @@ class HomePage extends StatelessWidget {
       name: 'Mozambique Tilapia',
       scientificName: 'Oreochromis mossambicus',
       commercialRole: 'Reservoir fishery',
+      imageAsset: 'assets/images/fish/mozambique_tilapia.jpg',
     ),
     _FishSpecies(
       category: 'Exotic & Major Carps',
@@ -47,12 +48,14 @@ class HomePage extends StatelessWidget {
       name: 'Grass Carp',
       scientificName: 'Ctenopharyngodon idella',
       commercialRole: 'Herbivorous control & commercial farm fish',
+      imageAsset: 'assets/images/fish/grass_carp.jpg',
     ),
     _FishSpecies(
       category: 'Exotic & Major Carps',
       name: 'Bighead Carp',
       scientificName: 'Hypophthalmichthys nobilis',
       commercialRole: 'Reservoir fishery',
+      imageAsset: 'assets/images/fish/bighead_carp.jpg',
     ),
     _FishSpecies(
       category: 'Exotic & Major Carps',
@@ -73,24 +76,28 @@ class HomePage extends StatelessWidget {
       name: 'Mrigal',
       scientificName: 'Cirrhinus mrigala',
       commercialRole: 'Bottom-dwelling commercial carp',
+      imageAsset: 'assets/images/fish/mrigal.jpg',
     ),
     _FishSpecies(
       category: 'Indigenous Food Fish',
       name: 'Green Chromide (Etroplus)',
       scientificName: 'Etroplus suratensis',
       commercialRole: 'Brackish/freshwater food fish (Karimeen / Pearlspot)',
+      imageAsset: 'assets/images/fish/green_chromide.jpg',
     ),
     _FishSpecies(
       category: 'Indigenous Food Fish',
       name: 'Striped Snakehead',
       scientificName: 'Channa striata',
       commercialRole: 'Local inland fishing (Lula)',
+      imageAsset: 'assets/images/fish/striped_snakehead.jpg',
     ),
     _FishSpecies(
       category: 'Indigenous Food Fish',
       name: 'Butter Catfish',
       scientificName: 'Ompok bimaculatus',
       commercialRole: 'Riverine fishery (Walaya)',
+      imageAsset: 'assets/images/fish/butter_catfish.jpg',
     ),
   ];
 

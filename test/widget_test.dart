@@ -35,7 +35,19 @@ void main() {
       ('Striped Snakehead', 'Channa striata'),
       ('Butter Catfish', 'Ompok bimaculatus'),
     ];
-    const picturedFish = {'Nile Tilapia', 'Common Carp', 'Rohu', 'Catla'};
+    const picturedFish = {
+      'Nile Tilapia',
+      'Mozambique Tilapia',
+      'Common Carp',
+      'Grass Carp',
+      'Bighead Carp',
+      'Catla',
+      'Rohu',
+      'Mrigal',
+      'Green Chromide (Etroplus)',
+      'Striped Snakehead',
+      'Butter Catfish',
+    };
 
     for (final (fishName, scientificName) in species) {
       await tester.scrollUntilVisible(

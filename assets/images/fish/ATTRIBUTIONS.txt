@@ -23,3 +23,45 @@ Title: CATLA FISH.jpg
 Author: Ranjithkumar Murugesan
 License: CC0
 Source: https://commons.wikimedia.org/wiki/File:CATLA_FISH.jpg
+
+mozambique_tilapia.jpg
+Title: Oreochromis mossambicus by NPS.jpg
+Author: Bryan Harry / Waikiki Aquarium (National Park Service)
+License: Public domain (U.S. National Park Service work)
+Source: https://commons.wikimedia.org/wiki/File:Oreochromis_mossambicus_by_NPS.jpg
+
+grass_carp.jpg
+Title: Grass carp portrait.jpg
+Author: Ryan Hagerty / U.S. Fish and Wildlife Service
+License: Public domain (U.S. Fish and Wildlife Service work)
+Source: https://commons.wikimedia.org/wiki/File:Grass_carp_portrait.jpg
+
+bighead_carp.jpg
+Title: Cardona,RizalFishPortjf5152 07.JPG
+Author: Ramon FVelasquez
+License: CC BY-SA 3.0
+Source: https://commons.wikimedia.org/wiki/File:Cardona,RizalFishPortjf5152_07.JPG
+
+mrigal.jpg
+Title: Mrigal Carp (Cirrhinus mrigala).JPG
+Author: Priyankar Chakraborty
+License: CC BY-SA 4.0
+Source: https://commons.wikimedia.org/wiki/File:Mrigal_Carp_(Cirrhinus_mrigala).JPG
+
+green_chromide.jpg
+Title: Green Chromide 01.jpg
+Author: Ganesh Mohan T
+License: CC BY-SA 4.0
+Source: https://commons.wikimedia.org/wiki/File:Green_Chromide_01.jpg
+
+striped_snakehead.jpg
+Title: Channa striata 342778351.jpg
+Author: renjus box
+License: CC BY 4.0
+Source: https://commons.wikimedia.org/wiki/File:Channa_striata_342778351.jpg
+
+butter_catfish.jpg
+Title: Butterfish (Pabda).jpg
+Author: Salil Kumar Mukherjee
+License: CC BY-SA 4.0
+Source: https://commons.wikimedia.org/wiki/File:Butterfish_(Pabda).jpg
