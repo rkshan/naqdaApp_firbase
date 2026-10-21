@@ -3,24 +3,6 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  static const _sections = [
-    _HomeSection(
-      title: 'Aquaculture',
-      description: 'Learn about aquaculture and breeding in Sri Lanka.',
-      icon: Icons.water,
-    ),
-    _HomeSection(
-      title: 'Farmers',
-      description: 'Discover resources for fish farmers and producers.',
-      icon: Icons.agriculture_outlined,
-    ),
-    _HomeSection(
-      title: 'Marketplace',
-      description: 'Explore local suppliers and aquaculture products.',
-      icon: Icons.shopping_basket_outlined,
-    ),
-  ];
-
   static const _fishSpecies = [
     _FishSpecies(
       category: 'Tilapia',
@@ -177,20 +159,6 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 28),
-                      const Text(
-                        'Explore',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
-                          color: Color(0xFF0C3D56),
-                        ),
-                      ),
-                      const SizedBox(height: 14),
-                      for (final section in _sections) ...[
-                        _HomeSectionCard(section: section),
-                        const SizedBox(height: 12),
-                      ],
-                      const SizedBox(height: 20),
                       const Text(
                         'Fish Encyclopedia',
                         style: TextStyle(
@@ -360,70 +328,3 @@ class _FishSpecies {
   final String? imageAsset;
 }
 
-class _HomeSectionCard extends StatelessWidget {
-  const _HomeSectionCard({required this.section});
-
-  final _HomeSection section;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFDCE8ED)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: const Color(0xFFEEF6F8),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            child: Icon(section.icon, color: const Color(0xFF0B6D93)),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  section.title,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w800,
-                    color: Color(0xFF0C3D56),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  section.description,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    height: 1.35,
-                    color: Color(0xFF5D7381),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HomeSection {
-  const _HomeSection({
-    required this.title,
-    required this.description,
-    required this.icon,
-  });
-
-  final String title;
-  final String description;
-  final IconData icon;
-}

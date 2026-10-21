@@ -144,7 +144,9 @@ void main() {
 
     expect(find.text('Welcome to NAQDA'), findsOneWidget);
     expect(find.text('GUEST'), findsOneWidget);
-    expect(find.text('Explore'), findsOneWidget);
+    expect(find.text('Explore'), findsNothing);
+    expect(find.text('Aquaculture'), findsNothing);
+    expect(find.text('Marketplace'), findsNothing);
     expect(find.text('Public welcome'), findsNothing);
     expect(find.text('Create Account'), findsNothing);
   });
