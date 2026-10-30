@@ -101,6 +101,11 @@ class SignUpPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 14),
                   _buildTextField(
+                    label: 'NIC number',
+                    icon: Icons.badge_outlined,
+                  ),
+                  const SizedBox(height: 14),
+                  _buildTextField(
                     label: 'Email address',
                     icon: Icons.email_outlined,
                     keyboardType: TextInputType.emailAddress,
