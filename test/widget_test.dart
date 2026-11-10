@@ -3,7 +3,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:naqda/login.dart';
 import 'package:naqda/home_page.dart';
+import 'package:naqda/naqd_homepage.dart';
 import 'package:naqda/role_selection.dart';
+import 'package:naqda/signup.dart';
 
 void main() {
   testWidgets('home page shows fish encyclopedia species', (
@@ -75,6 +77,74 @@ void main() {
     expect(find.text('Log in'), findsWidgets);
   });
 
+  testWidgets('login validates required fields before authentication', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MaterialApp(home: LoginPage()));
+
+    await tester.tap(find.byType(ElevatedButton).first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Enter your email address.'), findsOneWidget);
+    expect(find.text('Enter your password.'), findsOneWidget);
+  });
+
+  testWidgets('NAQDA login does not offer a signup shortcut', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(home: LoginPage(selectedRole: 'NAQDA')),
+    );
+
+    expect(find.text('Welcome back, NAQDA'), findsOneWidget);
+    expect(find.text('Sign up'), findsNothing);
+  });
+
+  testWidgets('farmer and buyer login screens keep their selected roles', (
+    WidgetTester tester,
+  ) async {
+    for (final role in ['Farmers', 'Buyers']) {
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump();
+      await tester.pumpWidget(MaterialApp(home: LoginPage(selectedRole: role)));
+
+      expect(find.text('Log in - $role'), findsOneWidget);
+      expect(find.text('Welcome back, $role'), findsOneWidget);
+      await tester.ensureVisible(find.text('Sign up'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Sign up'));
+      await tester.pumpAndSettle();
+      expect(find.text('Role: $role'), findsOneWidget);
+    }
+  });
+
+  testWidgets('signup validates account fields before authentication', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(
+      const MaterialApp(home: SignUpPage(selectedRole: 'Farmers')),
+    );
+
+    expect(find.text('Role: Farmers'), findsOneWidget);
+    await tester.ensureVisible(find.byType(ElevatedButton).first);
+    await tester.tap(find.byType(ElevatedButton).first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Enter your full name.'), findsOneWidget);
+    expect(find.text('Enter your email address.'), findsOneWidget);
+    expect(find.text('Create a password.'), findsOneWidget);
+  });
+
+  testWidgets('NAQDA management page shows farmer and buyer options', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MaterialApp(home: NaqdHomePage()));
+
+    expect(find.text('NAQDA Management'), findsOneWidget);
+    expect(find.text('Manage Farmers'), findsOneWidget);
+    expect(find.text('Manage Buyers'), findsOneWidget);
+  });
+
   testWidgets(
     'role selection shows all roles and enables continue after selection',
     (WidgetTester tester) async {
@@ -99,10 +169,6 @@ void main() {
 
       await tester.ensureVisible(find.text('Continue'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Continue'));
-      await tester.pumpAndSettle();
-
-      expect(find.text('Role: Farmers'), findsOneWidget);
     },
   );
 

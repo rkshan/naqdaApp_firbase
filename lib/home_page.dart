@@ -1,7 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, this.user});
+
+  final User? user;
 
   static const _fishSpecies = [
     _FishSpecies(
@@ -127,9 +130,9 @@ class HomePage extends StatelessWidget {
                               color: const Color(0xFFE6F5FA),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: const Text(
-                              'GUEST',
-                              style: TextStyle(
+                            child: Text(
+                              user == null ? 'GUEST' : 'SIGNED IN',
+                              style: const TextStyle(
                                 color: Color(0xFF0B6D93),
                                 fontSize: 12,
                                 fontWeight: FontWeight.w800,
@@ -137,6 +140,28 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                           ),
+                          if (user != null)
+                            IconButton(
+                              tooltip: 'Sign out',
+                              onPressed: () async {
+                                try {
+                                  await FirebaseAuth.instance.signOut();
+                                } on FirebaseAuthException catch (error) {
+                                  if (!context.mounted) return;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Unable to sign out: ${error.message ?? error.code}',
+                                      ),
+                                    ),
+                                  );
+                                }
+                              },
+                              icon: const Icon(
+                                Icons.logout,
+                                color: Color(0xFF0B6D93),
+                              ),
+                            ),
                         ],
                       ),
                       const SizedBox(height: 36),
@@ -327,4 +352,3 @@ class _FishSpecies {
   final String commercialRole;
   final String? imageAsset;
 }
-
