@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:naqda/auth_role_service.dart';
 import 'package:naqda/home_page.dart';
-import 'package:naqda/signup.dart';
+import 'package:naqda/login.dart';
+import 'package:naqda/naqd_homepage.dart';
 
 class RoleSelectionPage extends StatefulWidget {
   const RoleSelectionPage({super.key});
@@ -11,6 +14,7 @@ class RoleSelectionPage extends StatefulWidget {
 
 class _RoleSelectionPageState extends State<RoleSelectionPage> {
   String? _selectedRole;
+  bool _isContinuing = false;
 
   static const _roles = [
     _RoleOption(
@@ -34,6 +38,61 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
       icon: Icons.person_outline,
     ),
   ];
+
+  Future<void> _continue() async {
+    final selectedRole = _selectedRole;
+    if (selectedRole == null || _isContinuing) return;
+
+    if (selectedRole == 'Guest User') {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (route) => false,
+      );
+      return;
+    }
+
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => LoginPage(selectedRole: selectedRole),
+        ),
+      );
+      return;
+    }
+
+    setState(() => _isContinuing = true);
+    try {
+      final role = await AuthRoleService.resolveRole(
+        user,
+        requestedRole: selectedRole,
+      );
+      if (!mounted) return;
+      final page = role == 'NAQDA'
+          ? NaqdHomePage(user: user)
+          : HomePage(user: user);
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => page),
+        (route) => false,
+      );
+    } on AuthRoleException catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(error.message)));
+    } on FirebaseException catch (error) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            error.message ?? 'Could not load your account role. Try again.',
+          ),
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _isContinuing = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,24 +144,9 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
                     child: ElevatedButton(
                       onPressed: _selectedRole == null
                           ? null
-                          : () {
-                              if (_selectedRole == 'Guest User') {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                    builder: (context) => const HomePage(),
-                                  ),
-                                  (route) => false,
-                                );
-                                return;
-                              }
-
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      SignUpPage(selectedRole: _selectedRole),
-                                ),
-                              );
-                            },
+                          : _isContinuing
+                          ? null
+                          : _continue,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF66C2E9),
                         disabledBackgroundColor: const Color(0xFFD7E4E9),
@@ -113,20 +157,26 @@ class _RoleSelectionPageState extends State<RoleSelectionPage> {
                           borderRadius: BorderRadius.circular(16),
                         ),
                       ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Continue',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.w800,
+                      child: _isContinuing
+                          ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Continue',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                Icon(Icons.arrow_forward_rounded),
+                              ],
                             ),
-                          ),
-                          SizedBox(width: 8),
-                          Icon(Icons.arrow_forward_rounded),
-                        ],
-                      ),
                     ),
                   ),
                 ],

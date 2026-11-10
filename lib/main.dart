@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:naqda/auth_role_service.dart';
 import 'package:naqda/firebase_options.dart';
 import 'package:naqda/get_started_page.dart';
+import 'package:naqda/home_page.dart';
 import 'package:naqda/login.dart';
-import 'package:naqda/signup.dart';
+import 'package:naqda/naqd_homepage.dart';
+import 'package:naqda/role_selection.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +28,73 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF0a90b6)),
         useMaterial3: true,
       ),
-      home: const GetStartedPage(),
+      home: const AuthGate(),
+    );
+  }
+}
+
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Scaffold(
+            body: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Text(
+                  'Unable to check authentication: ${snapshot.error}',
+                ),
+              ),
+            ),
+          );
+        }
+        if (!snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          return const GetStartedPage();
+        }
+        final user = snapshot.data!;
+        return FutureBuilder<String?>(
+          future: AuthRoleService.getRole(user),
+          builder: (context, roleSnapshot) {
+            if (roleSnapshot.hasError) {
+              return Scaffold(
+                body: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Text(
+                      'Unable to load your account role: ${roleSnapshot.error}',
+                    ),
+                  ),
+                ),
+              );
+            }
+            if (roleSnapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+            }
+            return switch (roleSnapshot.data) {
+              'NAQDA' => NaqdHomePage(user: user),
+              'Farmers' || 'Buyers' => HomePage(user: user),
+              null => const RoleSelectionPage(),
+              _ => const Scaffold(
+                body: Center(
+                  child: Text('Invalid role. Contact an administrator.'),
+                ),
+              ),
+            };
+          },
+        );
+      },
     );
   }
 }
@@ -57,7 +127,10 @@ class LandingPage extends StatelessWidget {
                           _buildHeroArt(),
                           const SizedBox(height: 18),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 10,
+                            ),
                             decoration: BoxDecoration(
                               color: const Color(0xFFcfe4ee),
                               borderRadius: BorderRadius.circular(18),
@@ -65,7 +138,11 @@ class LandingPage extends StatelessWidget {
                             child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.fiber_manual_record, size: 13, color: Color(0xFF1d8fb3)),
+                                Icon(
+                                  Icons.fiber_manual_record,
+                                  size: 13,
+                                  color: Color(0xFF1d8fb3),
+                                ),
                                 SizedBox(width: 10),
                                 Text(
                                   'WELCOME TO NAQDA',
@@ -114,26 +191,33 @@ class LandingPage extends StatelessWidget {
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => const SignUpPage(),
+                                  builder: (context) =>
+                                      const RoleSelectionPage(),
                                 ),
                               );
                             },
                             child: Container(
                               width: double.infinity,
-                              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 18,
+                                vertical: 18,
+                              ),
                               decoration: BoxDecoration(
                                 color: const Color(0xFF49b7d6),
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: const Color(0xFF49b7d6).withValues(alpha: 0.35),
+                                    color: const Color(
+                                      0xFF49b7d6,
+                                    ).withValues(alpha: 0.35),
                                     blurRadius: 12,
                                     offset: const Offset(0, 8),
                                   ),
                                 ],
                               ),
                               child: const Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Get Started',
@@ -143,7 +227,11 @@ class LandingPage extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                                   ),
-                                  Icon(Icons.arrow_forward, color: Colors.white, size: 28),
+                                  Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.white,
+                                    size: 28,
+                                  ),
                                 ],
                               ),
                             ),
@@ -187,7 +275,11 @@ class LandingPage extends StatelessWidget {
                               spacing: 12,
                               runSpacing: 8,
                               children: [
-                                const Icon(Icons.waves, color: Color(0xFF0b3d4d), size: 18),
+                                const Icon(
+                                  Icons.waves,
+                                  color: Color(0xFF0b3d4d),
+                                  size: 18,
+                                ),
                                 SizedBox(
                                   width: 220,
                                   child: const Text(
@@ -219,14 +311,29 @@ class LandingPage extends StatelessWidget {
                     children: [
                       const Text(
                         '© 2026 NAQDA. A fresher everyday.',
-                        style: TextStyle(fontSize: 13, color: Color(0xFF476d7b)),
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Color(0xFF476d7b),
+                        ),
                       ),
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: const [
-                          Text('Privacy', style: TextStyle(fontSize: 13, color: Color(0xFF476d7b))),
+                          Text(
+                            'Privacy',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Color(0xFF476d7b),
+                            ),
+                          ),
                           SizedBox(width: 22),
-                          Text('Terms', style: TextStyle(fontSize: 13, color: Color(0xFF476d7b))),
+                          Text(
+                            'Terms',
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Color(0xFF476d7b),
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -332,7 +439,11 @@ class LandingPage extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   child: Transform.rotate(
                     angle: -0.22,
-                    child: const Icon(Icons.shield_moon_rounded, size: 92, color: Color(0xFF1f2f43)),
+                    child: const Icon(
+                      Icons.shield_moon_rounded,
+                      size: 92,
+                      color: Color(0xFF1f2f43),
+                    ),
                   ),
                 ),
                 const Align(
