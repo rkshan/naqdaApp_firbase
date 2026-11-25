@@ -3,11 +3,57 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:naqda/login.dart';
 import 'package:naqda/home_page.dart';
+import 'package:naqda/get_started_page.dart';
 import 'package:naqda/naqd_homepage.dart';
 import 'package:naqda/role_selection.dart';
 import 'package:naqda/signup.dart';
 
 void main() {
+  testWidgets('welcome page includes NAQDA news and onboarding action', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const MaterialApp(home: GetStartedPage()));
+
+    expect(find.text('Aquaculture for a thriving Sri Lanka.'), findsOneWidget);
+    expect(find.text('Get started'), findsOneWidget);
+
+    await tester.scrollUntilVisible(
+      find.text('NAQDA News'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('NAQDA News'), findsOneWidget);
+
+    const newsStories = [
+      (
+        'NAQDA Successfully Completes Community Development Training Programme to Strengthen Public Sector Leadership',
+        'Community development',
+      ),
+      (
+        "Regional 'AquaLivelihood' Project to Empower 11,000 Small-Scale Fish Farming Families in Sri Lanka Launched",
+        'Development project',
+      ),
+      (
+        'Signed an MoU with NARA to carry out joint research activities',
+        'Research partnership',
+      ),
+    ];
+    for (final (title, category) in newsStories) {
+      await tester.scrollUntilVisible(
+        find.text(title),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+      expect(find.text(title), findsOneWidget);
+      expect(
+        find.byKey(ValueKey('news-photo-$category')),
+        findsOneWidget,
+      );
+    }
+  });
+
   testWidgets('home page shows fish encyclopedia species', (
     WidgetTester tester,
   ) async {
